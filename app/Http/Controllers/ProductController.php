@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product; 
 use App\Models\Category;
+use App\Exports\ProductExport;
+use App\Imports\ProductImport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -25,6 +28,20 @@ class ProductController extends Controller
     
         return view('products.product.index',compact('data'))
             ->with('i', (request()->input('page', 1) - 1) * 5); 
+    }
+
+
+    public function export() 
+    {
+        return Excel::download(new ProductExport, 'products.xlsx');
+    }
+
+    
+    public function import() 
+    {
+        Excel::import(new ProductImport,request()->file('file'));
+             
+        return back();
     }
 
     /**

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\StoreController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PurchasesController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\MyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
-
+ 
 Route::resource('products', ProductController::class);
 Route::resource('categories', CategoryController::class);
 Route::resource('stores', StoreController::class);
@@ -54,3 +56,9 @@ Route::resource('employees', EmployeeController::class);
 Route::resource('purchases', PurchasesController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('sales', SalesController::class);
+
+Route::get('importExportView', [ProductController::class, 'importExportView']);
+
+Route::get('export', [ProductController::class, 'export'])->name('export');
+
+Route::post('import', [ProductController::class, 'import'])->name('import');

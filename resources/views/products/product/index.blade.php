@@ -16,7 +16,13 @@
                 </ol>
               </nav>
             </div>
-            <div class="col-lg-6 col-5 text-right">
+
+            <div class="col-lg-2 col-5 text-right">
+              <a href="{{ route('products.create') }}" class="btn btn-sm btn-neutral">New</a>
+              <a href="#" class="btn btn-sm btn-neutral">Filters</a>
+            </div>
+            
+            <div class="col-lg-4 col-5 text-right">
               <a href="{{ route('products.create') }}" class="btn btn-sm btn-neutral">New</a>
               <a href="#" class="btn btn-sm btn-neutral">Filters</a>
             </div>
@@ -82,6 +88,23 @@
               </table>
             </div>
           </div>
+
+
+          <div class="container">
+          <div class="card bg-light mt-3">
+           <div class="card-body">
+            <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="file" class="form-control">
+                <br>
+                <button class="btn btn-success">Import Product Data</button>
+                <a class="btn btn-warning" href="{{ route('export') }}">Export Products data</a>
+            </form>
+         </div>
+      </div>
+</div>
+
+
         </div>
       </div>
       @include('layouts.footers.auth')

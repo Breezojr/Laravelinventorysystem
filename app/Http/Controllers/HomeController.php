@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\Sale;
 use Illuminate\Support\Facades\DB;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Facades\Excel;
 class HomeController extends Controller
 {
     /**
@@ -36,4 +39,28 @@ $res[++$key] = [$val->months, (int)$val->total];
 
         return view('dashboard')->with('population', json_encode($res));
     }
+
+    public function importExportView()
+    {
+       return view('import');
+    }
+     
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function export() 
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+     
+    /**
+    * @return \Illuminate\Support\Collection
+    */
+    public function import() 
+    {
+        Excel::import(new UsersImport,request()->file('file'));
+             
+        return back();
+    }
+
 }
